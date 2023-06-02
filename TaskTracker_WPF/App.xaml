@@ -4,14 +4,18 @@
              xmlns:local="clr-namespace:TaskTracker_WPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="#060d2f" />
+        </Style>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Padding" Value="15"/>
             <Setter Property="MinWidth" Value="125"/>
             <Setter Property="Height" Value="30" />
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="Purple"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Background" Value="MediumPurple"/>
+            <Setter Property="Foreground" Value="Navy"/>
             <Setter Property="BorderBrush" Value="DarkBlue"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Template">
@@ -30,6 +34,7 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#1976D2"/>
+                    <Setter Property="Foreground" Value="White" />
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="Background" Value="#1565C0"/>
