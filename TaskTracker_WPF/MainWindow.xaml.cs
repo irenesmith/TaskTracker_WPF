@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using System.Windows;
 using MongoDB.Driver;
 
 namespace TaskTracker_WPF
@@ -9,7 +6,7 @@ namespace TaskTracker_WPF
     public partial class MainWindow : Window
     {
         private readonly IMongoCollection<Task> collection;
-
+        private readonly TaskManager taskManager;
         public MainWindow()
         {
             InitializeComponent();
@@ -22,15 +19,9 @@ namespace TaskTracker_WPF
             IMongoDatabase database = client.GetDatabase(databaseName);
             collection = database.GetCollection<Task>(collectionName);
 
-            RefreshTasks();
-        }
+            taskManager = new TaskManager();
 
-        private void RefreshTasks()
-        {
-            var filter = Builders<Task>.Filter.Empty;
-            var tasks = collection.Find(filter).ToList();
-
-            dataGridTasks.ItemsSource = tasks;
+            dataGridTasks.ItemsSource = taskManager.RefreshTasks();
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -48,8 +39,9 @@ namespace TaskTracker_WPF
                 IsDone = false
             };
             collection.InsertOne(newTask);
-            RefreshTasks();
+            dataGridTasks.ItemsSource = taskManager.RefreshTasks();
 
+            // Clear the contents of the text box.
             textBoxTask.Text = string.Empty;
         }
 
@@ -57,8 +49,8 @@ namespace TaskTracker_WPF
         {
             if (dataGridTasks.SelectedItem is Task selectedTask)
             {
-                collection.DeleteOne(t => t.Id == selectedTask.Id);
-                RefreshTasks();
+                taskManager.DeleteTask(selectedTask);
+                dataGridTasks.ItemsSource = taskManager.RefreshTasks();
             }
         }
 
@@ -68,8 +60,11 @@ namespace TaskTracker_WPF
             {
                 string newDescription = textBoxTask.Text;
                 selectedTask.Description = newDescription;
-                collection.ReplaceOne(t => t.Id == selectedTask.Id, selectedTask);
-                RefreshTasks();
+
+                taskManager.UpdateTask(selectedTask);
+                dataGridTasks.ItemsSource = taskManager.RefreshTasks();
+
+                // Clear the contents of the text box.
                 textBoxTask.Text = string.Empty;
             }
         }
@@ -79,8 +74,16 @@ namespace TaskTracker_WPF
             if (dataGridTasks.SelectedItem is Task selectedTask)
             {
                 selectedTask.IsDone = true;
-                collection.ReplaceOne(t => t.Id == selectedTask.Id, selectedTask);
-                RefreshTasks();
+                taskManager.UpdateTask(selectedTask);
+                dataGridTasks.ItemsSource = taskManager.RefreshTasks();
+            }
+        }
+
+        private void dataGridTasks_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (dataGridTasks.SelectedItem is Task selectedTask)
+            {
+                textBoxTask.Text = selectedTask.Description;
             }
         }
     }
