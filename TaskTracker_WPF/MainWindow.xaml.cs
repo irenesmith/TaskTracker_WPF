@@ -27,22 +27,23 @@ namespace TaskTracker_WPF
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             // Don't add a new task if the text box is empty.
-            if (string.IsNullOrEmpty(textBoxTask.Text)) { return; }
+            // if (string.IsNullOrEmpty(textBoxTask.Text)) { return; }
 
-            // If we got here, the text box contains text so we can
-            // create a new task.
-            string description = textBoxTask.Text;
-            var newTask = new Task
+            var newTaskDialog = new NewTaskDialog
             {
-                Description = description,
-                Timestamp = DateTime.Now,
-                IsDone = false
+                Owner = this
             };
-            collection.InsertOne(newTask);
-            dataGridTasks.ItemsSource = taskManager.RefreshTasks();
 
-            // Clear the contents of the text box.
-            textBoxTask.Text = string.Empty;
+            var dlgResult = newTaskDialog.ShowDialog();
+            if (dlgResult == true)
+            {
+                // If we got here, the text box contains text so we can
+                // create a new task.
+                string description = newTaskDialog.textBoxTask.Text;
+                var newTask = newTaskDialog.NewTask;
+                collection.InsertOne(newTask);
+                dataGridTasks.ItemsSource = taskManager.RefreshTasks();
+            }
         }
 
         private void ButtonRemove_Click(object sender, RoutedEventArgs e)
@@ -79,7 +80,7 @@ namespace TaskTracker_WPF
             }
         }
 
-        private void dataGridTasks_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void DataGridTasks_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (dataGridTasks.SelectedItem is Task selectedTask)
             {
