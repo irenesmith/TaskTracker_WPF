@@ -1,0 +1,24 @@
+﻿<Window x:Class="TaskTracker_WPF.NewTaskDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskTracker_WPF"
+        mc:Ignorable="d"
+        Title="New Task" Style="{StaticResource WindowColors}" WindowStartupLocation="CenterOwner">
+    <Grid Background="Transparent" Margin="15">
+        <StackPanel Margin="10, 5, 10, 5">
+            <CheckBox x:Name="CheckDone" Foreground="White" Content="Done" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Label Foreground="White" Content="Complete by:" />
+                <DatePicker x:Name="PickerCompleteBy" Height="25" />
+            </StackPanel>
+            <Label Content="Description:" FontSize="12" Foreground="White"/>
+            <TextBox Margin="10, 0, 10, 0" FontSize="12" x:Name="textBoxTask" />
+            <StackPanel Margin="10, 5, 10, 5" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="BtnOk" Content="OK" IsDefault="True" Click="BtnOk_Click" />
+                <Button Content="Cancel" IsCancel="True" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
