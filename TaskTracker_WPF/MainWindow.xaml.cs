@@ -39,7 +39,6 @@ namespace TaskTracker_WPF
             {
                 // If we got here, the text box contains text so we can
                 // create a new task.
-                string description = newTaskDialog.textBoxTask.Text;
                 var newTask = newTaskDialog.NewTask;
                 collection.InsertOne(newTask);
                 dataGridTasks.ItemsSource = taskManager.RefreshTasks();

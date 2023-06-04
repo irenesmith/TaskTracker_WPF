@@ -9,7 +9,7 @@ namespace TaskTracker_WPF
         [BsonId]
         public ObjectId Id { get; set; }
         public string Description { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTime CompleteBy { get; set; }
         public bool IsDone { get; set; }
     }
 }
