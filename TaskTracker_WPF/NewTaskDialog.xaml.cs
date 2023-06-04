@@ -33,7 +33,7 @@ namespace TaskTracker_WPF
         {
             if (PickerCompleteBy.SelectedDate is not null)
             {
-                NewTask.Timestamp = (DateTime)PickerCompleteBy.SelectedDate;
+                NewTask.CompleteBy = (DateTime)PickerCompleteBy.SelectedDate;
             }
 
             NewTask.Description = textBoxTask.Text;

@@ -37,7 +37,7 @@
         <DataGrid x:Name="dataGridTasks" AutoGenerateColumns="False" Grid.ColumnSpan="2" Margin="10" SelectionChanged="DataGridTasks_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Header="Done" Binding="{Binding IsDone}"/>
-                <DataGridTextColumn Header="Complete By" Binding="{Binding Timestamp, StringFormat={}{0:dd/MM/yyyy}}"/>
+                <DataGridTextColumn Header="Complete By" Binding="{Binding CompleteBy, StringFormat={}{0:M/dd/yyyy}}"/>
                 <DataGridTextColumn Header="Task" Binding="{Binding Description}"/>
             </DataGrid.Columns>
         </DataGrid>

@@ -23,7 +23,7 @@ public class TaskManager
         var filter = Builders<Task>.Filter.Empty;
         var tasks = collection.Find(filter).ToList();
 
-        return (List<Task>)tasks.OrderByDescending(t => t.Timestamp).ToList();
+        return (List<Task>)tasks.OrderByDescending(t => t.CompleteBy).ToList();
     }
 
     public void InsertTask(Task newTask)
