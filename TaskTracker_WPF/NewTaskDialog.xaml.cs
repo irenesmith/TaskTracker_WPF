@@ -27,6 +27,7 @@ namespace TaskTracker_WPF
             this.SizeToContent = SizeToContent.WidthAndHeight;
             PickerCompleteBy.SelectedDate = DateTime.Now;
             NewTask = new Task();
+            textBoxTask.Focus();
         }
 
         private void BtnOk_Click(object sender, RoutedEventArgs e)
