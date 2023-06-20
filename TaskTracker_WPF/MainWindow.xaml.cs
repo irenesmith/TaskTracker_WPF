@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using MongoDB.Driver;
 
 namespace TaskTracker_WPF
@@ -84,6 +85,18 @@ namespace TaskTracker_WPF
             if (dataGridTasks.SelectedItem is Task selectedTask)
             {
                 textBoxTask.Text = selectedTask.Description;
+            }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox && checkBox.IsLoaded && checkBox.DataContext is Task task)
+            {
+                task.IsDone = checkBox.IsChecked ?? false;
+
+                // Simulated method to update the task in the database
+                taskManager.UpdateTask(task);
+                dataGridTasks.ItemsSource = taskManager.RefreshTasks();
             }
         }
     }

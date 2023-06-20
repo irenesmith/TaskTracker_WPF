@@ -39,16 +39,24 @@
                 <Style TargetType="DataGridRow">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsDone}" Value="True">
-                            <Setter Property="Background" Value="LightCyan"/>
+                            <Setter Property="Background" Value="White"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsDone}" Value="False">
-                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Background" Value="GreenYellow"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="Done" Binding="{Binding IsDone}"/>
+                <DataGridTemplateColumn Header="Status">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsDone, Mode=TwoWay}"
+                            Checked="CheckBox_Checked"
+                            Unchecked="CheckBox_Checked"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Complete By" Binding="{Binding CompleteBy, StringFormat={}{0:M/dd/yyyy}}"/>
                 <DataGridTextColumn Header="Task" Binding="{Binding Description}"/>
             </DataGrid.Columns>
