@@ -2,11 +2,12 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Task Tracker" Height="600" Width="800"
-        Style="{StaticResource WindowColors}">
+        Style="{StaticResource WindowColors}"
+        WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0" ResizeBorderThickness="3" />
     </WindowChrome.WindowChrome>
-    <Grid Background="#060d2f">
+    <Grid Background="#060d2f" Margin="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="7*"/>
