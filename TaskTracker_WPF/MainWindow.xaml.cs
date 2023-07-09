@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
 using MongoDB.Driver;
 
 namespace TaskTracker_WPF
@@ -22,6 +24,29 @@ namespace TaskTracker_WPF
             taskManager = new TaskManager();
 
             dataGridTasks.ItemsSource = taskManager.RefreshTasks();
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            ((HwndSource)PresentationSource.FromVisual(this)).AddHook(HookProc);
+        }
+
+        private IntPtr HookProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == 0x0084 /*WM_NCHITTEST*/ )
+            {
+                // This prevents a crash in WindowChromeWorker._HandleNCHitTest
+                try
+                {
+                    lParam.ToInt32();
+                }
+                catch (OverflowException)
+                {
+                    handled = true;
+                }
+            }
+            return IntPtr.Zero;
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -84,6 +109,18 @@ namespace TaskTracker_WPF
             if (dataGridTasks.SelectedItem is Task selectedTask)
             {
                 textBoxTask.Text = selectedTask.Description;
+            }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox checkBox && checkBox.IsLoaded && checkBox.DataContext is Task task)
+            {
+                task.IsDone = checkBox.IsChecked ?? false;
+
+                // Simulated method to update the task in the database
+                taskManager.UpdateTask(task);
+                dataGridTasks.ItemsSource = taskManager.RefreshTasks();
             }
         }
     }
