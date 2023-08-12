@@ -29,7 +29,6 @@
 
                 <Button Content="Remove Task" Click="ButtonRemove_Click" />
                 <Button Content="Update Task" Click="ButtonUpdate_Click" />
-                <Button Content="Mark as Done" Click="ButtonMarkDone_Click" />
                 <TextBlock Foreground="White" FontSize="12">Copyright (c) 2023, Irene P. Smith.</TextBlock>
                 <TextBlock Foreground="Wheat" FontSize="12">All rights reserved.</TextBlock>
             </StackPanel>
